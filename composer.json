@@ -1,0 +1,14 @@
+{
+    "require": {
+        "doctrine/orm": "^2.13",
+        "twig/twig": "^2.0",
+        "symfony/twig-bundle": "^6.1",
+        "doctrine/annotations": "^1.13",
+        "symfony/runtime": "^6.1"
+    },
+    "config": {
+        "allow-plugins": {
+            "symfony/runtime": true
+        }
+    }
+}

@@ -5,7 +5,7 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
-        container_name: projet_symfony_docker
+        container_name: symfony_docker
         restart: on-failure
         ports:
             - "1234:80"
@@ -13,36 +13,31 @@ services:
             - ./conf/site.conf:/etc/nginx/http.d/default.conf
             - ./src:/var/www/html
         networks:
-            - projet-acpSymfony
-            - nginx-proxy-manager_default
-
+            - acpSymfony
 
     db:
         image: mariadb:10.8.2
-        container_name: projet_mariadb_docker
+        container_name: mariadb_docker
         restart: always
         volumes:
             - db-data:/var/lib/mysql
         environment:
             MYSQL_ROOT_PASSWORD: 'ChangeMeLater'
         networks:
-            - projet-acpSymfony
+            - acpSymfony
 
-    # maildev:
-    #     image: maildev/maildev
-    #     container_name: maildev_docker
-    #     command: bin/maildev --web 80 --smtp 25 --hide-extensions STARTTLS
-    #     ports:
-    #         - "8081:80"
-    #     restart: always
-    #     networks:
-    #         - projet-acpSymfony
+    maildev:
+        image: maildev/maildev
+        container_name: maildev_docker
+        command: bin/maildev --web 80 --smtp 25 --hide-extensions STARTTLS
+        ports:
+            - "8081:80"
+        restart: always
+        networks:
+            - acpSymfony
 
 volumes:
     db-data:
 
 networks:
-    projet-acpSymfony:
-    nginx-proxy-manager_default:
-        name: nginx-proxy-manager_default
-        external: true
+    acpSymfony:
